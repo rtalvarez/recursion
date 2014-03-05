@@ -3,6 +3,8 @@
 
 // but you don't so you're going to have to write it from scratch:
 var stringifyJSON = function(obj){
+
+    //The last placed comma and the initial { are wrong :(
     
     //WHY WONT THIS WORK ?! :(  
     //var memo = '{';
@@ -22,22 +24,18 @@ var stringifyJSON = function(obj){
     
     value = obj[Object.keys(obj)[0]];
     index = Object.keys(obj)[0];
-    
     delete obj[Object.keys(obj)[0]];
     
     if (typeof value === 'string'){
         
-        
       memo = memo + '"' + index + '":"' + value + '",' + stringifyJSON(obj);
+      return memo;
+
     }else{
     
       
       memo2 = '"' + index + '"' + ':{' + stringifyJSON(value) + '';
-      
       return memo + memo2 + stringifyJSON(obj);
     }
-    
-    return memo;
-
     
 }
