@@ -3,39 +3,49 @@
 
 // but you don't so you're going to have to write it from scratch:
 var stringifyJSON = function(obj){
-
-    //The last placed comma and the initial { are wrong :(
     
-    //WHY WONT THIS WORK ?! :(  
-    //var memo = '{';
-
-    var memo = '';
-    var memo2 = '';
-    
-    if (Object.keys(obj).length === 0){
+ //Todo: Put the initial { by somehow identifying the first iteration, like
+ //the first 'else' identifies the last iteration. (Will be tricky since I
+ //dont know the initial length of Object.keys(obj) )
+ 
+ //Known bugs: it crashes when sent a) more than 1 nested object inside,
+ //or b) more than 1 object in total. (TypeError: Object.keys called on
+ //non object)
+ 
+ //Eg a) crashes with:
+     //{
+       //name: 'rob',
+       //obj2: {somekey: 'value1', otherkey: 'value2', obj3: {key:'value'}}
+     //}
+ //Eg b) crashes with:
+      //{
+       //name: 'rob',
+       //obj2: {somekey: 'value1', otherkey: 'value2'},
+       //obj3: {newkey: 'value3', newestkey: 'hello world'}
+     //}
+ 
+ value = obj[Object.keys(obj)[0]];
+ index = Object.keys(obj)[0];
+ 
+ delete obj[Object.keys(obj)[0]];
+ 
+ if (typeof value === 'string'){
+     
+    if (Object.keys(obj).length !== 0){
         
-        //OR THIS ?! :(
-        //return '{' + memo + '}';
-        
-        //if the others dont why does this one ?
-        return memo + '}';
-    }
-    
-    
-    value = obj[Object.keys(obj)[0]];
-    index = Object.keys(obj)[0];
-    delete obj[Object.keys(obj)[0]];
-    
-    if (typeof value === 'string'){
-        
-      memo = memo + '"' + index + '":"' + value + '",' + stringifyJSON(obj);
-      return memo;
-
-    }else{
-    
+      return '"' + index + '":"' + value + '",' + str(obj);
       
-      memo2 = '"' + index + '"' + ':{' + stringifyJSON(value) + '';
-      return memo + memo2 + stringifyJSON(obj);
     }
+    
+    else{
+        
+      return '"' + index + '":"' + value + '}';
+      
+    }
+       
+ }else{
+     
+     return '{' + str(value) + ',' + str(obj);
+ }
     
 }
