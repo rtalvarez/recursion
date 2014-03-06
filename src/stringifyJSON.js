@@ -8,6 +8,8 @@ var stringifyJSON = function(obj){
  //the first 'else' identifies the last iteration. (Will be tricky since I
  //dont know the initial length of Object.keys(obj) )
  
+ //Also: JSON.stringify() does not destroy the original object, and I do :(!
+ 
  //Known bugs: it crashes when sent a) more than 1 nested object inside,
  //or b) more than 1 object in total. (TypeError: Object.keys called on
  //non object)
@@ -39,7 +41,7 @@ var stringifyJSON = function(obj){
     
     else{
         
-      return '"' + index + '":"' + value + '}';
+      return '"' + index + '":"' + value + '"}';
       
     }
        
