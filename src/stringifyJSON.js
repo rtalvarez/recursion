@@ -4,33 +4,40 @@
 // but you don't so you're going to have to write it from scratch:
 var stringifyJSON = function(obj){
     
-    // The first '{' is still missing !!
-    
- value = obj[Object.keys(obj)[0]];
- index = Object.keys(obj)[0];
+ var recurse = function(obj){
 
- delete obj[Object.keys(obj)[0]];
- 
- if (typeof value === 'string'){
-     
-     if (Object.keys(obj).length !== 0){
-         
-        return '"' + index + '":"' + value + '",' + str(obj);
-     }
-     
-     
-    return '"' + index + '":"' + value + '"}';
- }
- 
- else{
-     
-     if (Object.keys(obj).length !== 0){
-         
-        return '"' + index + '":{' + str(value) + ',' + str(obj);
-     }
-     
-    return '"' + index + '":{' + str(value) + '}';
-     
- }
+   index = Object.keys(obj)[0];
+   value = obj[index];
+   
+
+   delete obj[Object.keys(obj)[0]];
+   
+   if (typeof value === 'string'){
+       
+       if (Object.keys(obj).length !== 0){
+           
+          return '"' + index + '":"' + value + '",' + str(obj);
+       }
+       
+       
+      return '"' + index + '":"' + value + '"}';
+   }
+   
+   else{
+       
+       if (Object.keys(obj).length !== 0){
+           
+          return '"' + index + '":{' + str(value) + ',' + str(obj);
+       }
+       
+      return '"' + index + '":{' + str(value) + '}';
+       
+   }
+
+ };
+
+ return '{' + recurse(obj);
+    
+
       
 }
